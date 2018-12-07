@@ -9,7 +9,7 @@ The threadNetwork plugin provides a thread view of emails of mailbox. We can ent
 
 ## How to work
 
-### neo4jd3 installation
+### Neo4jd3 installation
 1.Download the neo4jd3 floder from the project.
 
 2.Follow the README.md of the floder to installation neo4jd3
