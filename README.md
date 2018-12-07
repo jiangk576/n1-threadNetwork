@@ -9,7 +9,7 @@ The threadNetwork plugin provides a thread view of emails of mailbox. We can ent
 
 ## How to install
 
-1. Download and unzip `n1-threadNetwork.zip` from the [Releases page](https://github.com/colinking/n1-unsubscribe/releases/latest).
+1. Download and unzip `n1-threadNetwork.zip` from the [Releases page](https://github.com/jiangk576/n1-threadNetwork/releases/).
 
 2. In Nylas Mail, Select the menu bar option `Developer > Install a Plugin...`, then select the unzipped folder, `n1-threadNetwork`
 
@@ -17,7 +17,7 @@ The threadNetwork plugin provides a thread view of emails of mailbox. We can ent
 
 ## Reporting Bugs
 
-- **Feature Requests or Bug Reports**: Submit them through the [issues](issues) pane.
+- **Feature Requests or Bug Reports**: Submit them through the [issues](https://github.com/jiangk576/n1-threadNetwork/issues) pane.
 
 ## Made by
 
