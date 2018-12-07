@@ -14,7 +14,7 @@ The threadNetwork plugin provides a thread view of emails of mailbox. We can ent
 
 2.Follow the README.md of the floder to installation neo4jd3
 
-3.prepare the data in Neo4j data format orD3.js data format
+3.prepare the data in Neo4j data format or D3.js data format
 
 ### Plugin installation
 1. Download and unzip `n1-threadNetwork.zip` from the [Releases page](https://github.com/jiangk576/n1-threadNetwork/releases/).
