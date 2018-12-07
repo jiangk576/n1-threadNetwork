@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <title>neo4jd3.js</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/neo4jd3.min.css?v=0.0.1">
+        <style>
+            body,
+            html,
+            .neo4jd3 {
+                height: 100%;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="neo4jd3"></div>
+        <!-- Scripts -->
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
+        <script type="text/javascript">
+            document.domain = "localhost";
+            var nodes;
+            //var dtd = $.Deferred();
+            $.ajax({
+              type:"POST",
+              url: "http://localhost:7474/db/data/transaction/commit",
+              dataType:"json",
+              contentType:"application/json",
+              //async:false,
+              data:JSON.stringify({
+                    statements: [{
+                        statement: "match(n {senderEmail:{senderEmail}}) optional match (n)-[r*0..6]-(m) return distinct n,m,r limit 300",
+                        parameters:{
+                            "senderEmail" : UrlSearch()[0]
+                        },
+                        resultDataContents: ["graph"]
+                    }]
+                }),
+              success: function(data, textStatus, jqXHR){
+                    nodes = data;
+                    init();
+                    //dtd.resolve(data);
+                },
+              error:function(jqXHR, textStatus, errorThrown){
+                    //dtd.reject(jqXHR, textStatus, errorThrown);
+                }
+             });//end of placelist ajax 
+            //nodes = dtd;
+            //get参数 
+            function UrlSearch() {
+               var name,value;
+               var str=location.href; //取得整个地址栏
+               var num=str.indexOf("?")
+               str=str.substr(num+1); //取得所有参数   stringvar.substr(start [, length ]
+               var arr=str.split("&"); //各个参数放到数组里
+               return arr;
+            }
+        </script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/neo4jd3.js?v=0.0.1"></script>
+        <script type="text/javascript">
+            function init() {
+                var neo4jd3 = new Neo4jd3('#neo4jd3', {
+                    highlight: [
+                        {
+                            class: 'Project',
+                            property: 'name',
+                            value: 'neo4jd3'
+                        }, {
+                            class: 'User',
+                            property: 'userId',
+                            value: 'eisman'
+                        }
+                    ],
+                    icons: {
+//                        'Address': 'home',
+                        'Api': 'gear',
+//                        'BirthDate': 'birthday-cake',
+                        'Cookie': 'paw',
+//                        'CreditCard': 'credit-card',
+//                        'Device': 'laptop',
+                        'Email': 'at',
+                        'Git': 'git',
+                        'Github': 'github',
+                        'Google': 'google',
+//                        'icons': 'font-awesome',
+                        'Important': 'map-marker',
+                        'Issues': 'exclamation-circle',
+                        'Language': 'language',
+                        'Options': 'sliders',
+                        'Password': 'lock',
+                        'Phone': 'phone',
+                        'Project': 'folder-open',
+                        'SecurityChallengeAnswer': 'commenting',
+                        'User': 'user',
+                        'zoomFit': 'arrows-alt',
+                        'zoomIn': 'search-plus',
+                        'zoomOut': 'search-minus'
+                    },
+                    images: {
+                        'Address': 'img/twemoji/1f3e0.svg',
+//                        'Api': 'img/twemoji/1f527.svg',
+                        'BirthDate': 'img/twemoji/1f382.svg',
+                        'Cookie': 'img/twemoji/1f36a.svg',
+                        'CreditCard': 'img/twemoji/1f4b3.svg',
+                        'Device': 'img/twemoji/1f4bb.svg',
+                        'Email': 'img/twemoji/2709.svg',
+                        'Git': 'img/twemoji/1f5c3.svg',
+                        'Github': 'img/twemoji/1f5c4.svg',
+                        'icons': 'img/twemoji/1f38f.svg',
+                        'Ip': 'img/twemoji/1f4cd.svg',
+                        'Issues': 'img/twemoji/1f4a9.svg',
+                        'Language': 'img/twemoji/1f1f1-1f1f7.svg',
+                        'Options': 'img/twemoji/2699.svg',
+                        'Password': 'img/twemoji/1f511.svg',
+//                        'Phone': 'img/twemoji/1f4de.svg',
+                        'Project': 'img/twemoji/2198.svg',
+                        'Project|name|neo4jd3': 'img/twemoji/2196.svg',
+//                        'SecurityChallengeAnswer': 'img/twemoji/1f4ac.svg',
+                        'User': 'img/twemoji/1f600.svg'
+//                        'zoomFit': 'img/twemoji/2194.svg',
+//                        'zoomIn': 'img/twemoji/1f50d.svg',
+//                        'zoomOut': 'img/twemoji/1f50e.svg'
+                    },
+                    minCollision: 60,
+                    neo4jData: nodes,
+                    /*neo4jDataUrl: "/json/neo4jData.json",*/
+                    nodeRadius: 25,
+                    onNodeClick: function(node) {
+                        // *代表向所有父级发送，或者可以指定地址
+                        window.parent.postMessage(node.properties.messageId,"*");
+                    }
+                    /*onNodeDoubleClick: function(node) {
+                        switch(node.id) {
+                            case '25':
+                                // Google
+                                window.open(node.properties.url, '_blank');
+                                break;
+                            default:
+                                var maxNodes = 5,
+                                    data = neo4jd3.randomD3Data(node, maxNodes);
+                                neo4jd3.updateWithD3Data(data);
+                                break;
+                        }
+                    },
+                    onRelationshipDoubleClick: function(relationship) {
+                        console.log('double click on relationship: ' + JSON.stringify(relationship));
+                    },*/
+                    /*zoomFit: true*/
+                });
+            }
+        </script>
+        <!-- <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-430863-29', 'auto');
+          ga('send', 'pageview');
+        </script> -->
+        
+    </body>
+</html>
