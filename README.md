@@ -5,7 +5,7 @@
 The threadNetwork plugin provides a thread view of emails of mailbox. We can enter or close the email thread view by clicking on the key shaped toolbar in the upper right corner of the client. In the thread view, a new module "thread sidebar" will be created in the right part of the MessageList to display the thread network structure of all of the messages. You can adjust the view structure by scaling and dragging the size of the thread sidebar. When email node is clicked, some information about the email will be displayed in the upper part of the thread sidebar and details of the email will be displayed in the left. The red node in the network is the important message obtained by the EmailRank algorithm. The thread view and the identified important messages help us to clearly see the development of different threads.
 
 ## Usage
-![Unsubscribe: unsubscribe without leaving Nylas](plugin.png)
+![ThreadNetwork: thread view of emails](threadNetwork.png)
 
 ## How to install
 
